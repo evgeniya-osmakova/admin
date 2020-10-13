@@ -32,7 +32,7 @@ def get_cards():
 @app.route('/cards/', methods=['POST'])
 def post_cards():
     new_card = json.loads(request.data)
-    print('!!!!!!!!!!!!')
+    print('__________')
     print(cards)
     max_id = 0
     for card in cards:
@@ -41,6 +41,7 @@ def post_cards():
 
     new_card['id'] = str(max_id + 1)
     cards.append(new_card)
+    print(cards)
     return new_card
 
 # delete card
