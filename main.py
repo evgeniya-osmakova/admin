@@ -19,18 +19,21 @@ cards = [
 
 @app.route('/', methods=['GET'])
 def get_root():
-    return ''
+    return '12'
 
 # get card list
 @app.route('/cards/', methods=['GET'])
 def get_cards():
+    print('!!!!!!!!!!!!')
+    print(cards)
     return json.dumps(cards)
 
 # add new card
 @app.route('/cards/', methods=['POST'])
 def post_cards():
     new_card = json.loads(request.data)
-
+    print('!!!!!!!!!!!!')
+    print(cards)
     max_id = 0
     for card in cards:
         if int(card['id']) > max_id:
