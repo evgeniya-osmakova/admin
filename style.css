@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #8c8c8c;
+}
+
+header {
+    height: 50px;
+    background: #d9d9d9;
+    color: #8c8c8c;
+}
+
+header p {
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
+.cards {
+    padding-top: 50px;
+    padding-left: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 90px;
+    column-gap: 30px
+}
+
+.form_fields {
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 20% 80%;
+    gap: 20px;
+}
+
+.form_color {
+    background: #d9d9d9;
+}
+
+.form {
+    border: 1px solid black;
+    padding-bottom: 20px;
+}
+
+.btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 2px 0;
+      border: solid;
+      border-color: transparent;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 10px;
+      font-weight: bold;
+}
+
+.btn_red {
+    background: #ff8470;
+}
+
+.btn:hover {
+    border-color: white;
+}
+
+.form_textarea {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.add {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.add_img {
+    height: 60px;
+    cursor: pointer;
+    border: solid;
+    border-radius: 40px;
+    border-color: transparent;
+}
+
+.add_img:hover {
+    border-color: white;
+}
+
+.add_text {
+    color: white;
+    font-size: 24px;
+}
+
+.btn_group {
+    display: flex;
+    gap: 5px;
+}
+
+.load:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

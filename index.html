@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Admin panel</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://unpkg.com/vuex@2.0.0"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <header>
+                <p>Admin panel</p>
+            </header>
+
+            <main>
+                <div class="add" v-if="store.state.state === 'start'">
+                    <p v-on:click="loadCards" class="add_text load">Load card list</p>
+                </div>
+                <div v-if="store.state.state !== 'start'">
+
+                    <div class="add" v-if="store.state.state === 'canAdd'">
+                        <p class="add_text">Add new card</p>
+                        <img class="add_img" src="text-plus-icon.png" alt="" v-on:click="addCard()">
+                    </div>
+                    <div class="cards">
+                        <div class="cards" v-for="{ header, description, id } in cards">
+                            <div class="card form_color">
+                                <form v-on:submit="sendResponse($event)" class="form" method="POST" action="">
+                                    <div class="form_fields">
+                                        <div hidden>
+                                            <input type="text" v-bind:value="id" name="id" hidden>
+                                        </div>
+                                        <input class="form_input" id="card__header" type="text" v-bind:value="header" name="header">
+                                        <textarea class="form_textarea" v-model="description" id="card__description" name="description"></textarea>
+                                        <div class="btn_group">
+                                            <input id='save' class="btn" type="submit" name="add" value="Save" />
+                                            <input id='delete' class="btn btn_red" type="submit" name="delete" value="Delete" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+        <script>
+          //path to the server
+          const path = 'http://localhost:5000/cards/';
+
+          //init vues store
+          const store = new Vuex.Store({
+            state: {
+              cards: [],
+              state: 'start',
+            },
+            actions: {
+              //load cards from server
+              loadCards({ commit }) {
+                axios.get(path).then(({ data }) => commit('refreshCards', data));
+              },
+            },
+            mutations: {
+              //add new empty card
+              addCard(state) {
+                state.cards.push({id: '', header: '', description: ''});
+              },
+              //change state status: 'start', 'canAdd' or 'cantAdd'
+              changeState (state, value) {
+                state.state = value;
+              },
+              //refresh cards on the page
+              refreshCards (state, cards) {
+                Vue.set(state, 'cards', cards)
+                state.state = 'canAdd';
+              },
+            }
+          });
+
+          //init new vue instance
+          const app = new Vue({
+            el: '#app',
+            methods: {
+              //init cards loading from server in Vuex
+              loadCards() {
+                store.dispatch('loadCards');
+              },
+              //init new empty card adding in Vuex
+              addCard() {
+                if (store.state.state === 'canAdd') {
+                  store.commit('addCard');
+                  store.commit('changeState', 'cantAdd');
+                }
+              },
+              //sending changes to the server
+              sendResponse(e) {
+                e.preventDefault();
+                const action = e.submitter.id;
+                const formData = new FormData(e.target);
+                const [id, header, description] = [...formData.values()]
+                async function send() {
+                  try {
+                    if (action === 'save') {
+                      if (id) {
+                        await axios.put(path, { id, header, description });
+                      } else {
+                        await axios.post(path, { header, description });
+                      }
+                    } else {
+                      await axios.delete(`${path}${id}`);
+                    }
+                    store.commit('changeState', 'canAdd');
+                    store.dispatch('loadCards');
+                  } catch (error) {
+                    console.error(error);
+                  }
+                }
+                send();
+              },
+            },
+            computed: {
+              //loads cards array from Vuex store
+              cards() {
+                return store.state.cards;
+              },
+            }
+          });
+        </script>
+    </body>
+</html>
