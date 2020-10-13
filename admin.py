@@ -57,3 +57,6 @@ def put_card():
             cards[i] = card_to_amend
             return card
     abort(404)
+
+if __name__=="__main__":
+    app.run(debug=True)
