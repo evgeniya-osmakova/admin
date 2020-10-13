@@ -17,6 +17,10 @@ cards = [
     {"id": "4", "header": "Purchase/Refunds", "description": "Learn about payment, how to send gifts, and refunds." }
 ]
 
+@app.route('/', methods=['GET'])
+def get_root():
+    return ''
+
 # get card list
 @app.route('/cards/', methods=['GET'])
 def get_cards():
