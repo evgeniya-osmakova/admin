@@ -17,9 +17,9 @@ cards = [
     {"id": "4", "header": "Purchase/Refunds", "description": "Learn about payment, how to send gifts, and refunds." }
 ]
 
-@app.route('/', methods=['GET'])
-def get_root():
-    return '12'
+# @app.route('/', methods=['GET'])
+# def get_root():
+#     return '12'
 
 # get card list
 @app.route('/cards/', methods=['GET'])
