@@ -51,7 +51,7 @@
         </div>
         <script>
           //path to the server
-          const path = 'https://admininstation-panel.herokuapp.com/cards/';
+          const path = 'https://my-flask-backend.herokuapp.com/cards/';
 
           //init vues store
           const store = new Vuex.Store({
@@ -76,7 +76,8 @@
               },
               //refresh cards on the page
               refreshCards (state, cards) {
-                Vue.set(state, 'cards', cards)
+                console.log(cards);
+                Vue.set(state, 'cards', cards);
                 state.state = 'canAdd';
               },
             }
